@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My first three.js app</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@<version>/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@<version>/examples/jsm/"
+    }
+  }
+</script>
+<body onload="setUp()">
+<script type="module" src="js/main.js"></script>
+
+
+<canvas id="bg"></canvas>
+
+<main>
+
+  <header id="intro1">
+    <h1>Hi! I'm Adrian</h1>
+    <p>aka Larfin</p>
+  </header>
+  <div class="divSeparator"></div>
+
+  <section id="intro2" style="grid-column: 2/7">
+    <h1>
+      I'm like to make cool stuff
+    </h1>
+    <p>nad this site is to showcase some of them </p>
+  </section>
+  <div class="divSeparator">
+
+  </div>
+
+  <section id="summary" style="grid-column: 2/9">
+    <h2>📜 Manifesto</h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.
+    </p>
+
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.
+    </p>
+
+
+  </section>
+
+  <section class="light">
+    <h2 id="portfolio">👩🏽‍🚀 Projects</h2>
+
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.
+    </p>
+
+    <h2>🏆 Accomplishments</h2>
+
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.
+    </p>
+
+  </section>
+
+  <blockquote id="quote">
+    <p>The best way out is always through <br>-Robert Frost</p>
+  </blockquote>
+  <div class="divSeparator"></div>
+
+  <section class="left">
+    <h2 id="work">🌮 Work History</h2>
+
+    <h3>McDonalds</h3>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.
+    </p>
+    <h3>Burger King</h3>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+      anim id est laborum.
+    </p>
+  </section>
+
+  <blockquote id="goodbye">
+    <p>Thanks for checking in!</p>
+  </blockquote>
+  <div id="navigation_button">
+  </div>
+  <div id="navigation_panel_right" onclick="navigationPanelRightShow()">
+    <button>aa</button>
+  </div>
+
+  <script>
+    var scrollingId = ["intro1", "intro2", "summary", "portfolio", "quote", "work", "goodbye"];
+
+    var scrollHeight = 0;
+
+    function setUp() {
+      var navPanel = document.getElementById("navigation_button");
+      scrollingId.forEach(function (value) {
+        console.log(value);
+      })
+      document.getElementById(scrollingId[0]).scrollIntoView({
+        behavior: "smooth"
+      });
+      const buttonUP = document.createElement("button");
+      buttonUP.classList.add("buttonUp")
+      buttonUP.textContent = "⇧";
+      buttonUP.addEventListener("mousedown", scrollUp);
+      navPanel.appendChild(buttonUP);
+
+      for (const sid in scrollingId) {
+        const button = document.createElement("button");
+        button.textContent = "·";
+        button.classList.add("buttonSep");
+        button.id = ("button_nav" + sid);
+        button.addEventListener("mousedown", function () {
+          scrollHeight = sid;
+          document.getElementById(scrollingId[sid]).scrollIntoView({
+            behavior: "smooth"
+          });
+          for (let i=0; i<7; i++){
+            document.getElementById("button_nav" + i).style.color = "";
+          }
+          document.getElementById("button_nav" + sid).style.color = "darkorange";
+        });
+        navPanel.appendChild(button);
+      }
+      document.getElementById("button_nav" + 0).style.color = "darkorange";
+
+      const buttonDown = document.createElement("button");
+      buttonDown.classList.add("buttonDown")
+      buttonDown.textContent = "⇩";
+      buttonDown.addEventListener("mousedown", scrollDown);
+      navPanel.appendChild(buttonDown);
+
+    }
+    function navigationPanelRightShow(){
+      document.getElementById("navigation_panel_right").classList.toggle("active");
+    }
+    function scrollUp() {
+      console.log("z :" + scrollHeight);
+      if (scrollHeight > 0) {
+        document.getElementById("button_nav" + scrollHeight).style.color = "";
+        scrollHeight--;
+        document.getElementById(scrollingId[scrollHeight]).scrollIntoView({
+          behavior: "smooth"
+        });
+        document.getElementById("button_nav" + scrollHeight).style.color = "darkorange";
+      }
+      console.log("d :" + scrollHeight);
+
+    }
+
+    function scrollDown() {
+      console.log("z :" + scrollHeight);
+      if (scrollHeight < scrollingId.length - 1) {
+        document.getElementById("button_nav" + scrollHeight).style.color = "";
+        scrollHeight++;
+        document.getElementById(scrollingId[scrollHeight]).scrollIntoView({
+          behavior: "smooth"
+        });
+        document.getElementById("button_nav" + scrollHeight).style.color = "darkorange";
+      }
+      console.log("d :" + scrollHeight);
+
+    }
+  </script>
+
+</main>
+
+
+</body>
+</html>
