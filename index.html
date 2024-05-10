@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>My first three.js app</title>
+  <title>Larfin.dev</title>
   <link rel="stylesheet" href="css/style.css"/>
   <style>
-    body { margin: 0; }
+    body {
+      margin: 0;
+    }
   </style>
 </head>
 <script type="importmap">
@@ -16,8 +18,14 @@
     }
   }
 </script>
-<body onload="setUp()">
+<body id="site_body" onload="setUp()">
 <script type="module" src="js/main.js"></script>
+<script type="module">
+  import {GoRocket} from '/js/main.js';
+
+  const buttonGO = document.getElementById("rocketFly");
+  buttonGO.onclick = GoRocket;
+</script>
 
 
 <canvas id="bg"></canvas>
@@ -27,6 +35,7 @@
   <header id="intro1">
     <h1>Hi! I'm Adrian</h1>
     <p>aka Larfin</p>
+    <button id="rocketFly"></button>
   </header>
   <div class="divSeparator"></div>
 
@@ -37,7 +46,6 @@
     <p>nad this site is to showcase some of them </p>
   </section>
   <div class="divSeparator">
-
   </div>
 
   <section id="summary" style="grid-column: 2/9">
@@ -60,7 +68,8 @@
 
 
   </section>
-
+  <div class="divSeparator">
+  </div>
   <section class="light">
     <h2 id="portfolio">👩🏽‍🚀 Projects</h2>
 
@@ -83,7 +92,8 @@
     </p>
 
   </section>
-
+  <div class="divSeparator">
+  </div>
   <blockquote id="quote">
     <p>The best way out is always through <br>-Robert Frost</p>
   </blockquote>
@@ -109,25 +119,71 @@
       anim id est laborum.
     </p>
   </section>
-
+  <div class="divSeparator">
+  </div>
   <blockquote id="goodbye">
     <p>Thanks for checking in!</p>
   </blockquote>
+
+
   <div id="navigation_button">
   </div>
-  <div id="navigation_panel_right" onclick="navigationPanelRightShow()">
-    <button>aa</button>
+  <div id="navigation_panel_left" onclick="navigationPanelLeftShow()">
+    <div style="display: flex">
+      <label id="left_panel_title">social media links</label>
+      <img id="burger-menu-icon" src="img/burger-menu.svg" alt="tab_Img">
+    </div>
+
+
+    <table>
+      <ul>
+        <li>
+          <img class="img_site_logo" src="img/github-icon.svg" alt="github">
+          <a href="https://github.com/L4rfin">@L4rfin</a>
+        </li>
+        <li>
+          <img class="img_site_logo" src="img/linkedin-icon.svg" alt="linkedin">
+          <a href="https://www.linkedin.com/in/adrian-adam-zając-156577270/">@Adrian_Adam_Zając</a></li>
+        <li>
+          <img class="img_site_logo" src="img/instagram.svg" alt="instagram">
+          <a href="https://www.instagram.com/larfin.dev/">@larfin.dev</a>
+        </li>
+        <li>
+          <img class="img_site_logo" src="img/youtube-icon.svg" alt="youtybe">
+          <a href="https://www.youtube.com/channel/UCsBSUTKw88Ig6JoXnWwVwlw">@larfin6327</a>
+        </li>
+        <li>
+          <img class="img_site_logo" src="img/tiktok-icon.svg" alt="youtybe">
+          <a href="https://www.youtube.com/channel/UCsBSUTKw88Ig6JoXnWwVwlw">null</a>
+        </li>
+      </ul>
+    </table>
   </div>
-
   <script>
-    var scrollingId = ["intro1", "intro2", "summary", "portfolio", "quote", "work", "goodbye"];
+    // pages element list to scroll thru
+    let scrollingId = ["intro1", "intro2", "summary", "portfolio", "quote", "work", "goodbye"];
+    let scrollHeight = 0;
 
-    var scrollHeight = 0;
 
+    // scroll capturing to scroll pages by well
+    let body = document.getElementById("site_body");
+
+    function scroll(event) {
+      if (event.deltaY < 0) {
+        scrollUp();
+      }
+      if (event.deltaY > 0) {
+        scrollDown();
+      }
+    }
+
+    body.addEventListener("wheel", scroll)
+
+
+    // setup generate dynamic element like: button for navigation
     function setUp() {
-      var navPanel = document.getElementById("navigation_button");
+      let navPanel = document.getElementById("navigation_button");
       scrollingId.forEach(function (value) {
-        console.log(value);
       })
       document.getElementById(scrollingId[0]).scrollIntoView({
         behavior: "smooth"
@@ -148,7 +204,7 @@
           document.getElementById(scrollingId[sid]).scrollIntoView({
             behavior: "smooth"
           });
-          for (let i=0; i<7; i++){
+          for (let i = 0; i < 7; i++) {
             document.getElementById("button_nav" + i).style.color = "";
           }
           document.getElementById("button_nav" + sid).style.color = "darkorange";
@@ -164,11 +220,18 @@
       navPanel.appendChild(buttonDown);
 
     }
-    function navigationPanelRightShow(){
-      document.getElementById("navigation_panel_right").classList.toggle("active");
+
+    // right navigation panel methods
+    function navigationPanelLeftShow() {
+      document.getElementById("navigation_panel_left").classList.toggle("active");
+      document.getElementById("burger-menu-icon").classList.toggle("active");
     }
+
+    // pages scrolling methods
     function scrollUp() {
-      console.log("z :" + scrollHeight);
+      if (scrollHeight === 3) {
+      }
+
       if (scrollHeight > 0) {
         document.getElementById("button_nav" + scrollHeight).style.color = "";
         scrollHeight--;
@@ -177,12 +240,10 @@
         });
         document.getElementById("button_nav" + scrollHeight).style.color = "darkorange";
       }
-      console.log("d :" + scrollHeight);
 
     }
 
     function scrollDown() {
-      console.log("z :" + scrollHeight);
       if (scrollHeight < scrollingId.length - 1) {
         document.getElementById("button_nav" + scrollHeight).style.color = "";
         scrollHeight++;
@@ -191,13 +252,9 @@
         });
         document.getElementById("button_nav" + scrollHeight).style.color = "darkorange";
       }
-      console.log("d :" + scrollHeight);
-
     }
   </script>
 
 </main>
-
-
 </body>
 </html>
