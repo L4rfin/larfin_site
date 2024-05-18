@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Larfin.dev</title>
-  <link rel="shortcut icon" href="#">
+  <link rel="shortcut icon" href="data:,">
   <link rel="stylesheet" href="./css/style.css"/>
   <style>
     body {
@@ -22,21 +22,23 @@
 <body id="site_body" onload="setUp()">
 <script type="module" src="./js/main.js"></script>
 <script type="module">
-  import {GoRocket} from './js/main.js';
+  import {bricksAnima, brickSetupPosition} from './js/main.js';
 
   const buttonGO = document.getElementById("rocketFly");
-  buttonGO.onclick = GoRocket;
+  const buttonBack = document.getElementById("back");
+  buttonGO.onclick = bricksAnima;
+  buttonBack.onclick = brickSetupPosition;
 </script>
 
 
 <canvas id="bg"></canvas>
 
 <main>
-
   <header id="intro1">
     <h1>Hi! I'm Adrian</h1>
     <p>aka Larfin</p>
     <button id="rocketFly"></button>
+    <button id="back"></button>
   </header>
   <div class="divSeparator"></div>
 
@@ -73,24 +75,91 @@
   </div>
   <section class="light">
     <h2 id="portfolio">👩🏽‍🚀 Projects</h2>
+      <div id="projectDiv">
+        <p id="projectDescription">
+          here is place to show project description
+        </p>
+      </div>
 
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-      anim id est laborum.
-    </p>
+      <div id="projectNavBarr"></div>
+    <script type="module" >
+      import {brickChosen} from './js/main.js';
+      let projectChosen = -1;
+      let projectTags = [['java','sql'],['css','html','js'],['python','sql']]
+      let projectDescription = [
+        `multi line?
+        -yes
+        -now
+        `,`
+        AAA
+        AAAA
+        A
+        A
+        A
+        A
+        A
+        AAA
+        A
+        AAAA
+        AA
+        `,`
+        bbb
+        b
+        b
+        b
+        b
 
-    <h2>🏆 Accomplishments</h2>
+        b
+        b
+        b
+        b
+        b
+        b
+        b`
+      ];
+      function projectBrick(number){
+        brickChosen(projectTags[number]);
+      }
+      function projectGoRight() {
+        if (projectChosen<projectDescription.length){
+          projectChosen++;
+        }
+        if (projectDescription[projectChosen] === undefined){
+          projectChosen = 0;
+        }
+        document.getElementById("projectDescription").innerText = projectDescription[projectChosen];
+        projectBrick(projectChosen);
+      }
 
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-      nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-      anim id est laborum.
-    </p>
+      function projectGoLeft() {
+        console.log(projectChosen)
+        if (projectChosen>=0){
+          projectChosen--;
+        }
+        if (projectChosen<0){
+          projectChosen = projectDescription.length-1;
+        }
+        document.getElementById("projectDescription").innerText = projectDescription[projectChosen];
+        projectBrick(projectChosen);
+      }
+
+      let navBarr = document.getElementById("projectNavBarr")
+      let buttonLeft = document.createElement("button")
+      buttonLeft.textContent = "<";
+      buttonLeft.classList.add("projectNavButton");
+      buttonLeft.addEventListener("mousedown", projectGoLeft);
+      navBarr.appendChild(buttonLeft);
+
+
+
+      let buttonRight = document.createElement("button")
+      buttonRight.textContent = ">";
+      buttonRight.classList.add("projectNavButton");
+      buttonRight.addEventListener("mousedown", projectGoRight);
+      navBarr.appendChild(buttonRight);
+
+    </script>
+
 
   </section>
   <div class="divSeparator">

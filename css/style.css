@@ -147,8 +147,6 @@ button{
   transform: rotate(450deg);
 }
 .img_site_logo{
-  /*filter: grayscale(100%);*/
-  /*-webkit-filter: grayscale(100%);*/
   max-height: 15px;
   max-width: 15px;
 }
@@ -161,10 +159,15 @@ li{
 }
 /*end links panel*/
 
+/* start project list*/
 
+#projectPanelList{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-
-
+/*end project list */
 
 blockquote {
   padding: 0;
