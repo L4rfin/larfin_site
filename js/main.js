@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass";
-import {EffectComposer} from "three/examples/jsm/postprocessing/EffectComposer";
-import {OutputPass} from "three/examples/jsm/postprocessing/OutputPass";
+import {RenderPass} from 'three/addons/jsm/postprocessing/RenderPass';
+import {EffectComposer} from 'three/addons/jsm/postprocessing/EffectComposer';
+import {OutputPass} from 'three/addons/jsm/postprocessing/OutputPass';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
