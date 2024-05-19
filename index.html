@@ -21,24 +21,16 @@
 </script>
 <body id="site_body" onload="setUp()">
 <script type="module" src="./js/main.js"></script>
-<script type="module">
-  import {bricksAnima, brickSetupPosition} from './js/main.js';
-
-  const buttonGO = document.getElementById("rocketFly");
-  const buttonBack = document.getElementById("back");
-  buttonGO.onclick = bricksAnima;
-  buttonBack.onclick = brickSetupPosition;
-</script>
 
 
 <canvas id="bg"></canvas>
 
 <main>
   <header id="intro1">
-    <h1>Hi! I'm Adrian</h1>
-    <p>aka Larfin</p>
-    <button id="rocketFly"></button>
-    <button id="back"></button>
+    <h1 style="margin-bottom: 0.2rem" >Hi! I'm Adrian</h1>
+    <p style="align-self: center; margin-top:0.1rex; color: rebeccapurple ">
+      aka Larfin
+    </p>
   </header>
   <div class="divSeparator"></div>
 
@@ -73,24 +65,26 @@
   </section>
   <div class="divSeparator">
   </div>
+  <br>
   <section class="light">
     <h2 id="portfolio">👩🏽‍🚀 Projects</h2>
-      <div id="projectDiv">
-        <p id="projectDescription">
-          here is place to show project description
-        </p>
-      </div>
+    <div id="projectDiv" >
+      <p id="projectDescription">
+        here is place to show project description
+      </p>
+    </div>
 
-      <div id="projectNavBarr"></div>
-    <script type="module" >
-      import {brickChosen} from './js/main.js';
+    <div id="projectNavBarr"></div>
+    <script type="module">
+      import {brickChosen, bricksAnima, brickSetupPosition, bricksAnimaBack} from './js/main.js';
+      let onPosition = false;
+      let heightOnPages = 0;
       let projectChosen = -1;
-      let projectTags = [['java','sql'],['css','html','js'],['python','sql']]
+      let projectTags = [['java', 'sql'], ['css', 'html', 'js'], ['python', 'sql']]
       let projectDescription = [
         `multi line?
         -yes
-        -now
-        `,`
+        `, `
         AAA
         AAAA
         A
@@ -102,7 +96,7 @@
         A
         AAAA
         AA
-        `,`
+        `, `
         bbb
         b
         b
@@ -117,14 +111,36 @@
         b
         b`
       ];
-      function projectBrick(number){
+
+      window.addEventListener('inputChanged', function(event) {
+        const newValue = event.detail;
+        console.log('Value changed to:', newValue);
+        heightOnPages = newValue;
+        if (heightOnPages===3&& !onPosition){
+          bricksAnima();
+          onPosition = true;
+        }
+        if (heightOnPages!==3&&onPosition){
+          bricksAnimaBack();
+          onPosition = false;
+        }
+        if (heightOnPages===2 || heightOnPages===4){
+          setup();
+        }
+      });
+      function setup(){
+        brickSetupPosition()
+      }
+
+      function projectBrick(number) {
         brickChosen(projectTags[number]);
       }
+
       function projectGoRight() {
-        if (projectChosen<projectDescription.length){
+        if (projectChosen < projectDescription.length) {
           projectChosen++;
         }
-        if (projectDescription[projectChosen] === undefined){
+        if (projectDescription[projectChosen] === undefined) {
           projectChosen = 0;
         }
         document.getElementById("projectDescription").innerText = projectDescription[projectChosen];
@@ -133,11 +149,11 @@
 
       function projectGoLeft() {
         console.log(projectChosen)
-        if (projectChosen>=0){
+        if (projectChosen >= 0) {
           projectChosen--;
         }
-        if (projectChosen<0){
-          projectChosen = projectDescription.length-1;
+        if (projectChosen < 0) {
+          projectChosen = projectDescription.length - 1;
         }
         document.getElementById("projectDescription").innerText = projectDescription[projectChosen];
         projectBrick(projectChosen);
@@ -149,7 +165,6 @@
       buttonLeft.classList.add("projectNavButton");
       buttonLeft.addEventListener("mousedown", projectGoLeft);
       navBarr.appendChild(buttonLeft);
-
 
 
       let buttonRight = document.createElement("button")
@@ -229,11 +244,10 @@
       </ul>
     </table>
   </div>
-  <script>
+  <script >
     // pages element list to scroll thru
     let scrollingId = ["intro1", "intro2", "summary", "portfolio", "quote", "work", "goodbye"];
     let scrollHeight = 0;
-
 
     // scroll capturing to scroll pages by well
     let body = document.getElementById("site_body");
@@ -245,6 +259,7 @@
       if (event.deltaY > 0) {
         scrollDown();
       }
+
     }
 
     body.addEventListener("wheel", scroll)
@@ -299,9 +314,6 @@
 
     // pages scrolling methods
     function scrollUp() {
-      if (scrollHeight === 3) {
-      }
-
       if (scrollHeight > 0) {
         document.getElementById("button_nav" + scrollHeight).style.color = "";
         scrollHeight--;
@@ -310,7 +322,8 @@
         });
         document.getElementById("button_nav" + scrollHeight).style.color = "darkorange";
       }
-
+      const customEvent = new CustomEvent('inputChanged', { detail: scrollHeight });
+      window.dispatchEvent(customEvent);
     }
 
     function scrollDown() {
@@ -322,6 +335,8 @@
         });
         document.getElementById("button_nav" + scrollHeight).style.color = "darkorange";
       }
+      const customEvent = new CustomEvent('inputChanged', { detail: scrollHeight });
+      window.dispatchEvent(customEvent);
     }
   </script>
 

@@ -1,14 +1,20 @@
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {RenderPass} from "three/examples/jsm/postprocessing/RenderPass";
+import {EffectComposer} from "three/examples/jsm/postprocessing/EffectComposer";
+import {OutputPass} from "three/examples/jsm/postprocessing/OutputPass";
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setPixelRatio(2);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-const pointLight = new THREE.PointLight(0xffffff, 2);
-pointLight.position.set(5, 5, 5);
+const  pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
+
+renderer.toneMapping = THREE.CineonToneMapping;
+renderer.toneMappingExposure = 1.5;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight);
@@ -22,7 +28,7 @@ scene.add(cube);
 
 camera.position.z = 4;
 camera.position.y = 1;
-camera.aspect = 21;
+camera.aspect = 2;
 
 //shape loader
 const loader = new GLTFLoader();
@@ -31,9 +37,10 @@ const loader = new GLTFLoader();
 // brick
 let brickSetting = false;
 let brickGo = false;
+let brickGoBack = false;
 let brickList = [];
-let brickPositionStart = [5, 5, 5, 5, 5, 5.4, 5.4, 5.4, 5.4]
-let brickPositionEnd = [0, 0, 0, 0, 0, 0.4, 0.4, 0.4, 0.4]
+let brickPositionStart = [[-5,-1], [-5,-1], [-5,-1], [-5,-1], [-5,-1], [-5.4,-1], [-5.4,-1], [-5.4,-1], [-5.4,-1]]
+let brickPositionEnd = [[0,0], [0,0], [0,0], [0,0], [0,0], [0.4,0], [0.4,0], [0.4,0], [0.4,0]]
 let brickPositionTrue = [false, false, false, false, false, false, false, false, false]
 let brickJava;
 let brickPython;
@@ -46,7 +53,13 @@ let brickJS;
 let brickPS;
 
 export function bricksAnima() {
+  console.log("AAA")
   brickGo = true
+}
+export function bricksAnimaBack() {
+  trueCount = 0;
+  console.log("BBB")
+  brickGoBack = true
 }
 export function brickChosen(list){
   console.log(list);
@@ -54,15 +67,36 @@ export function brickChosen(list){
 export function brickSetupPosition() {
   trueCount = 0;
   for (let i = 0; i < brickPositionEnd.length; i++) {
-  brickList[i].position.y = brickPositionStart[i];
+  brickList[i].position.y = brickPositionStart[i][0];
+  brickPositionTrue[i] = false;
   }
 }
 let trueCount = 0;
+function brickAnimationPlayReverse() {
+  for (let i = 0; i < brickPositionEnd.length; i++) {
+    if (brickPositionTrue[i]) {
+      console.log(brickList[i]);
+      brickList[i].position.y += (brickList[i].position.y > brickPositionStart[i][0]) ? -0.05 : 0.05;
+      if (brickList[i].position.y > brickPositionStart[i][0] - 0.2 && brickList[i].position.y < brickPositionStart[i][0] + 0.2) {
+        trueCount++;
+        brickPositionTrue[i] = false;
+      }
+    }
+
+  }
+  if (trueCount===9){
+    console.log("fals")
+    brickGoBack = false;
+  }
+
+}
+
 function brickAnimationPlay() {
   for (let i = 0; i < brickPositionEnd.length; i++) {
     if (!brickPositionTrue[i]) {
-      brickList[i].position.y += (brickList[i].position.y > brickPositionEnd[i]) ? -0.05 : 0.05;
-      if (brickList[i].position.y > brickPositionEnd[i] - 0.2 && brickList[i].position.y < brickPositionEnd[i] + 0.2) {
+      console.log(brickList[i]);
+      brickList[i].position.y += (brickList[i].position.y > brickPositionEnd[i][0]) ? -0.05 : 0.05;
+      if (brickList[i].position.y > brickPositionEnd[i][0] - 0.2 && brickList[i].position.y < brickPositionEnd[i][0] + 0.2) {
         console.log("trueCount")
         trueCount++;
         brickPositionTrue[i] = true;
@@ -203,7 +237,6 @@ export function GoRocket() {
 }
 
 let rocketObject = new THREE.Object3D();
-
 loader.load('models/rocket.gltf', function (gltf) {
   rocketObject = gltf.scene;
   scene.add(rocketObject);
@@ -236,10 +269,19 @@ function rocketGo() {
     rocketObject.position.x <= 7)
     rocketToGo = false;
 }
+rocketObject.layers.disableAll();
+camera.layers.enableAll();
 
 // rocket end
+
+const bloomComposer = new EffectComposer(renderer);
+const renderScene = new RenderPass(scene,camera);
+bloomComposer.addPass(renderScene);
+
+const outputPass = new OutputPass();
+bloomComposer.addPass( outputPass );
+
 function animate() {
-  requestAnimationFrame(animate);
   cube.rotation.x += 0.01;
   cube.rotation.y += 0.01;
   if (!brickSetting) {
@@ -248,8 +290,9 @@ function animate() {
   if (brickGo) {
     brickAnimationPlay();
   }
-
-
+  if (brickGoBack) {
+    brickAnimationPlayReverse();
+  }
   if (rocketObject) {
     if (!rocketSetting) {
       rocketSetSetting();
@@ -259,7 +302,14 @@ function animate() {
     }
 
   }
-  renderer.render(scene, camera);
+  bloomComposer.render()
+  requestAnimationFrame(animate);
 }
-
 animate();
+
+window.addEventListener('resize', function (){
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  bloomComposer.setSize(window.innerWidth,window.innerHeight);
+})
