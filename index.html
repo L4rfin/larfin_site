@@ -27,7 +27,7 @@
 
 <main>
   <header id="intro1">
-    <h1 style="margin-bottom: 0.2rem" >Hi! I'm Adrian</h1>
+    <h1 style="margin-bottom: 0.2rem">Hi! I'm Adrian</h1>
     <p style="align-self: center; margin-top:0.1rex; color: rebeccapurple ">
       aka Larfin
     </p>
@@ -68,7 +68,7 @@
   <br>
   <section class="light">
     <h2 id="portfolio">👩🏽‍🚀 Projects</h2>
-    <div id="projectDiv" >
+    <div id="projectDiv">
       <p id="projectDescription">
         here is place to show project description
       </p>
@@ -77,6 +77,7 @@
     <div id="projectNavBarr"></div>
     <script type="module">
       import {brickChosen, bricksAnima, brickSetupPosition, bricksAnimaBack} from './js/main.js';
+
       let onPosition = false;
       let heightOnPages = 0;
       let projectChosen = -1;
@@ -91,15 +92,23 @@
         A
         A
         A
-        A
+        A11111111111111111111111111111111111
         AAA
         A
         AAAA
         AA
         `, `
+        1
+        `, `
+        1
+        `, `
+        1
+        `, `
+        1
+        `, `
         bbb
         b
-        b
+        b1111111111111111111111111111111111111111111111111111111111111111111111111111111111
         b
         b
 
@@ -112,23 +121,24 @@
         b`
       ];
 
-      window.addEventListener('inputChanged', function(event) {
+      window.addEventListener('inputChanged', function (event) {
         const newValue = event.detail;
         console.log('Value changed to:', newValue);
         heightOnPages = newValue;
-        if (heightOnPages===3&& !onPosition){
+        if (heightOnPages === 3 && !onPosition) {
           bricksAnima();
           onPosition = true;
         }
-        if (heightOnPages!==3&&onPosition){
+        if (heightOnPages !== 3 && onPosition) {
           bricksAnimaBack();
           onPosition = false;
         }
-        if (heightOnPages===2 || heightOnPages===4){
+        if (heightOnPages === 2 || heightOnPages === 4) {
           setup();
         }
       });
-      function setup(){
+
+      function setup() {
         brickSetupPosition()
       }
 
@@ -143,8 +153,16 @@
         if (projectDescription[projectChosen] === undefined) {
           projectChosen = 0;
         }
+        for (let i = 0; i < projectDescription.length; i++) {
+          document.getElementById("buttonSepProj" + i).style.color = "";
+        }
+        document.getElementById("buttonSepProj" + projectChosen).style.color = "darkorange";
         document.getElementById("projectDescription").innerText = projectDescription[projectChosen];
         projectBrick(projectChosen);
+      }
+
+      function setProjectChosen() {
+        document.getElementById("projectDescription").innerText = projectDescription[projectChosen];
       }
 
       function projectGoLeft() {
@@ -155,6 +173,10 @@
         if (projectChosen < 0) {
           projectChosen = projectDescription.length - 1;
         }
+        for (let i = 0; i < projectDescription.length; i++) {
+          document.getElementById("buttonSepProj" + i).style.color = "";
+        }
+        document.getElementById("buttonSepProj" + projectChosen).style.color = "darkorange";
         document.getElementById("projectDescription").innerText = projectDescription[projectChosen];
         projectBrick(projectChosen);
       }
@@ -165,8 +187,21 @@
       buttonLeft.classList.add("projectNavButton");
       buttonLeft.addEventListener("mousedown", projectGoLeft);
       navBarr.appendChild(buttonLeft);
-
-
+      for (const sid in projectDescription) {
+        let button = document.createElement('button');
+        button.textContent = '.';
+        button.classList.add("buttonSepProj")
+        button.id = ("buttonSepProj" + sid);
+        button.addEventListener('mousedown', function () {
+          projectChosen = sid;
+          setProjectChosen();
+          for (let i = 0; i < projectDescription.length; i++) {
+            document.getElementById("buttonSepProj" + i).style.color = "";
+          }
+          document.getElementById("buttonSepProj" + sid).style.color = "darkorange";
+        })
+        navBarr.appendChild(button);
+      }
       let buttonRight = document.createElement("button")
       buttonRight.textContent = ">";
       buttonRight.classList.add("projectNavButton");
@@ -214,9 +249,11 @@
   <div id="navigation_button">
   </div>
   <div id="navigation_panel_left" onclick="navigationPanelLeftShow()">
-    <div style="display: flex">
+    <div style="display: flex; justify-content: space-between">
       <label id="left_panel_title">social media links</label>
-      <img id="burger-menu-icon" src="./img/burger-menu.svg" alt="tab_Img">
+      <div id="burger-menu-icon-container">
+        <img id="burger-menu-icon" src="./img/burger-menu.svg" alt="tab_Img">
+      </div>
     </div>
 
 
@@ -244,7 +281,7 @@
       </ul>
     </table>
   </div>
-  <script >
+  <script>
     // pages element list to scroll thru
     let scrollingId = ["intro1", "intro2", "summary", "portfolio", "quote", "work", "goodbye"];
     let scrollHeight = 0;
@@ -296,8 +333,9 @@
         });
         navPanel.appendChild(button);
       }
-      document.getElementById("button_nav" + 0).style.color = "darkorange";
 
+
+      document.getElementById("button_nav" + 0).style.color = "darkorange";
       const buttonDown = document.createElement("button");
       buttonDown.classList.add("buttonDown")
       buttonDown.textContent = "⇩";
@@ -322,7 +360,7 @@
         });
         document.getElementById("button_nav" + scrollHeight).style.color = "darkorange";
       }
-      const customEvent = new CustomEvent('inputChanged', { detail: scrollHeight });
+      const customEvent = new CustomEvent('inputChanged', {detail: scrollHeight});
       window.dispatchEvent(customEvent);
     }
 
@@ -335,7 +373,7 @@
         });
         document.getElementById("button_nav" + scrollHeight).style.color = "darkorange";
       }
-      const customEvent = new CustomEvent('inputChanged', { detail: scrollHeight });
+      const customEvent = new CustomEvent('inputChanged', {detail: scrollHeight});
       window.dispatchEvent(customEvent);
     }
   </script>

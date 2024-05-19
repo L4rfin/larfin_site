@@ -89,16 +89,49 @@ button{
   background-color: black;
   color: black;
 }
-.buttonUp:hover, .buttonDown:hover{
+.projectNavButton{
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;;
+  box-shadow: 0 0 10px rgba(255, 140, 0, 0.6);
+  font-size: 0.4em;
+  width: 2vw;
+  height: 2vh;
+  cursor: pointer;
+  border: none;
+  border-radius: 1rem;
+  background-color: black;
+  color: black;
+}
+
+#projectDiv{
+  min-width: 35rem;
+  min-height: 25rem;
+}
+#projectNavBarr{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.buttonUp:hover, .buttonDown:hover,.projectNavButton:hover{
   background-color: darkorange;
 
 }
-
+.buttonSepProj{
+  display: flex;
+  align-self: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  width: 2vw;
+  height: 7vh;
+}
 .buttonSep{
   font-size: 1.5em;
-  width: 5vw;
-  height: 5vh;
-
+  width: 7vw;
+  height: 7vh;
   border: none;   /* Brak obramowania */
   margin: 0;      /* Brak marginesów */
   padding: 0;     /* Brak wypełnienia */
@@ -130,9 +163,9 @@ button{
   flex-direction: column;
   top: 20%;
   left: -20%;
-  width: 22vw;
+  width: 23vw;
   height: 60vh;
-  background: var(--dark-bg);
+  background: black;
   border:1px darkorange solid;
   box-shadow: 0 0 10px rgba(255, 140, 0, 0.6);
   border-radius: 6px;
@@ -142,9 +175,14 @@ button{
 #navigation_panel_left.active{
   left: -2%;
 }
+#burger-menu-icon-container{
+  align-self: flex-end;
+  max-height: 25px;
+  max-width: 25px;
+  transition: 0.5s;
+}
 #burger-menu-icon{
   align-self: flex-end;
-  margin-left: 7rem;
   max-height: 25px;
   max-width: 25px;
   transition: 0.5s;
