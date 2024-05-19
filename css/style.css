@@ -16,6 +16,7 @@ canvas {
 :root {
   --dark-bg: rgba(15, 15, 15, 0.75);
   --spacing: 350px;
+  color: white;
   font-family: brandon-grotesque, sans-serif;
   font-weight: 400;
   font-style: normal;

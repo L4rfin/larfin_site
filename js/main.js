@@ -1,8 +1,5 @@
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {RenderPass} from 'three/addons/jsm/postprocessing/RenderPass';
-import {EffectComposer} from 'three/addons/jsm/postprocessing/EffectComposer';
-import {OutputPass} from 'three/addons/jsm/postprocessing/OutputPass';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -85,7 +82,7 @@ function brickAnimationPlayReverse() {
 
   }
   if (trueCount===9){
-    console.log("fals")
+    console.log("false")
     brickGoBack = false;
   }
 
@@ -104,7 +101,7 @@ function brickAnimationPlay() {
     }
   }
   if (trueCount===9){
-    console.log("fals")
+    console.log("false")
     brickGo = false;
   }
 }
@@ -274,13 +271,6 @@ camera.layers.enableAll();
 
 // rocket end
 
-const bloomComposer = new EffectComposer(renderer);
-const renderScene = new RenderPass(scene,camera);
-bloomComposer.addPass(renderScene);
-
-const outputPass = new OutputPass();
-bloomComposer.addPass( outputPass );
-
 function animate() {
   cube.rotation.x += 0.01;
   cube.rotation.y += 0.01;
@@ -302,8 +292,8 @@ function animate() {
     }
 
   }
-  bloomComposer.render()
   requestAnimationFrame(animate);
+  renderer.render(scene,camera)
 }
 animate();
 
@@ -311,5 +301,4 @@ window.addEventListener('resize', function (){
   camera.aspect = window.innerWidth/window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth,window.innerHeight);
-  bloomComposer.setSize(window.innerWidth,window.innerHeight);
 })
