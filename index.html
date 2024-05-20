@@ -76,7 +76,6 @@
 
     <div id="projectNavBarr"></div>
     <script type="module">
-      import {brickChosen, bricksAnima, brickSetupPosition, bricksAnimaBack} from './js/main.js';
 
       let onPosition = false;
       let heightOnPages = 0;
@@ -126,25 +125,14 @@
         console.log('Value changed to:', newValue);
         heightOnPages = newValue;
         if (heightOnPages === 3 && !onPosition) {
-          bricksAnima();
           onPosition = true;
         }
         if (heightOnPages !== 3 && onPosition) {
-          bricksAnimaBack();
           onPosition = false;
         }
         if (heightOnPages === 2 || heightOnPages === 4) {
-          setup();
         }
       });
-
-      function setup() {
-        brickSetupPosition()
-      }
-
-      function projectBrick(number) {
-        brickChosen(projectTags[number]);
-      }
 
       function projectGoRight() {
         if (projectChosen < projectDescription.length) {
