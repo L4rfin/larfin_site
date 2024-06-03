@@ -71,19 +71,19 @@
         here is place to show project description
       </p>
       <div id="projectSS_Container">
-      <img class="projectSS" src="./img/project1/img.png" alt="ss1" onclick="">
-      <img class="projectSS" src="./img/project1/img.png" alt="ss2">
-      <img class="projectSS" src="./img/project1/img.png" alt="ss3">
+      <img class="projectSS" id="projectSS1" src="./img/projectStart/img1.png" alt="ss1">
+      <img class="projectSS" id="projectSS2" src="./img/projectStart/img2.png" alt="ss2">
+      <img class="projectSS" id="projectSS3" src="./img/projectStart/img3.png" alt="ss3">
       </div>
     </div>
 
     <div id="projectNavBarr"></div>
-    <script type="module">
-
+    <script type="module" >
+      import {projectStack } from './js/main.js';
       let onPosition = false;
       let heightOnPages = 0;
       let projectChosen = -1;
-      let projectTags = [['java', 'sql'], ['css', 'html', 'js'], ['python', 'sql']]
+      let projectTags = [['java', 'sql'], ['css', 'html', 'js'], ['python', 'sql'],['java', 'sql'], ['css', 'html', 'js'], ['python', 'sql'], ['python', 'sql']]
       let projectDescription = [
         `multi line?
         -yes
@@ -149,11 +149,17 @@
         }
         document.getElementById("buttonSepProj" + projectChosen).style.color = "darkorange";
         document.getElementById("projectDescription").innerText = projectDescription[projectChosen];
-        projectBrick(projectChosen);
+        document.getElementById("projectSS1").src ="./img/project" +projectChosen+ "/img1.png";
+        document.getElementById("projectSS2").src ="./img/project" +projectChosen+ "/img2.png";
+        document.getElementById("projectSS3").src ="./img/project" +projectChosen+ "/img3.png";
+        projectStack(projectTags[projectChosen]);
       }
 
       function setProjectChosen() {
         document.getElementById("projectDescription").innerText = projectDescription[projectChosen];
+        document.getElementById("projectSS1").src ="./img/project" +projectChosen+ "/img1.png";
+        document.getElementById("projectSS2").src ="./img/project" +projectChosen+ "/img2.png";
+        document.getElementById("projectSS3").src ="./img/project" +projectChosen+ "/img3.png";
       }
 
       function projectGoLeft() {
@@ -169,7 +175,10 @@
         }
         document.getElementById("buttonSepProj" + projectChosen).style.color = "darkorange";
         document.getElementById("projectDescription").innerText = projectDescription[projectChosen];
-        projectBrick(projectChosen);
+        document.getElementById("projectSS1").src ="./img/project" +projectChosen+ "/img1.png";
+        document.getElementById("projectSS2").src ="./img/project" +projectChosen+ "/img2.png";
+        document.getElementById("projectSS3").src ="./img/project" +projectChosen+ "/img3.png";
+        projectStack(projectTags[projectChosen]);
       }
 
       let navBarr = document.getElementById("projectNavBarr")
@@ -206,7 +215,8 @@
   <div class="divSeparator">
   </div>
   <blockquote id="quote">
-    <p>The best way out is always through <br>-Robert Frost</p>
+    <p>the best you can do is start making something<br><br></p>
+    <p> it's always Better to fail trying then do nothing </p>
   </blockquote>
   <div class="divSeparator"></div>
 

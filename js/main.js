@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+// import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js'
 import {EffectComposer} from "three/addons/postprocessing/EffectComposer.js";
@@ -48,7 +48,7 @@ const unrealBloom = new UnrealBloomPass(
 );
 composer.addPass(unrealBloom);
 //shape loader
-const loader = new GLTFLoader();
+// const loader = new GLTFLoader();
 
 
 let angle = 0;
@@ -72,6 +72,15 @@ function animate() {
 }
 
 animate();
+
+let projectStackList = [];
+export function projectStack(list){
+  projectStackList = [];
+  for (let i = 0;i<list.length;i++){
+    projectStackList[i] = list[i];
+  }
+}
+
 
 window.addEventListener('resize', function () {
   camera.aspect = window.innerWidth / window.innerHeight;
