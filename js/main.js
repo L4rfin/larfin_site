@@ -3,7 +3,6 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js'
 import {EffectComposer} from "three/addons/postprocessing/EffectComposer.js";
-import {Vector3} from "three";
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);

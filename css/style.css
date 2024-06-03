@@ -1,22 +1,28 @@
+html,body{
 
+}
 #intro1,#intro2,#summary {
   width: fit-content;
   height: fit-content;
 }
 canvas {
+  color: white;
   position: fixed;
   top: 0;
   left: 0;
 }
 .divSeparator{
+  color: white;
+
   min-height: 150vh;
   min-width: 150vh;
 }
 
 :root {
+  color: white;
+
   --dark-bg: rgba(15, 15, 15, 0.75);
   --spacing: 350px;
-  color: white;
   font-family: brandon-grotesque, sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -35,6 +41,7 @@ main {
 }
 
 h1, h2, h3, blockquote {
+  color: white;
   width: fit-content;
   height: fit-content;
   font-family: elevon, sans-serif;
@@ -87,7 +94,7 @@ button{
   border: none;
   border-radius: 2rem;
   background-color: black;
-  color: black;
+  color: white;
 }
 .projectNavButton{
   display: flex;
@@ -102,12 +109,15 @@ button{
   border: none;
   border-radius: 1rem;
   background-color: black;
-  color: black;
+  color: white;
 }
 
 #projectDiv{
   min-width: 35rem;
   min-height: 25rem;
+}
+.projectDescription{
+  min-height: 90vh ;
 }
 #projectNavBarr{
   display: flex;
@@ -176,6 +186,8 @@ button{
   left: -2%;
 }
 #burger-menu-icon-container{
+  background-color: #555555;
+  border-radius: 5px;
   align-self: flex-end;
   max-height: 25px;
   max-width: 25px;
@@ -187,7 +199,7 @@ button{
   max-width: 25px;
   transition: 0.5s;
 }
-#burger-menu-icon.active{
+#burger-menu-icon-container.active{
   transform: rotate(450deg);
 }
 .img_site_logo{
@@ -210,7 +222,29 @@ li{
   justify-content: center;
   align-items: center;
 }
-
+#projectSS_Container{
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+}
+.projectSS {
+  width: 200px;
+  height: 100px;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+  cursor: pointer;
+}
+.projectSS:hover{
+  border:1px darkorange solid;
+}
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transform: none;
+  z-index: 1000;
+}
 /*end project list */
 
 blockquote {
@@ -219,7 +253,7 @@ blockquote {
   margin-bottom: var(--spacing);
 }
 
-blockquote p {
+blockquote {
   color: black;
   background-color: white;
   font-size: 4rem;
